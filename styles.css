@@ -1,0 +1,1188 @@
+/* ADI Portfolio — Stylesheet & Visual System
+   Features:
+   - High-contrast readability across Dark and Light modes
+   - Soft, comfortable light-mode canvas (#f1f5f9) eliminating eye glare
+   - Dedicated transparent sapphire watermark for Light mode (assets/portfolio-background-light.png)
+   - "Superior Color" typography in Light mode: Pitch obsidian (#000000 / #020617) headings and deep ink (#0f172a / #1e293b) text
+   - Crisp white card surfaces (#ffffff) with subtle elevation shadows for 100% distraction-free reading
+   - Preserved Dark mode with glowing cyan logo on dark canvas (assets/portfolio-background.jpg)
+   - Smooth animated page transitions between HOME, WORK, PROJECTS, SKILLS, RESUME, CONTACT
+   - Integrated Bunny Radio music player
+*/
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.25rem;
+}
+body {
+  min-width: 280px;
+  overflow-x: clip;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Fixed Background Logo & Theme Systems
+   ========================================================================== */
+
+.site-background {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: min(85vmin, 640px) min(85vmin, 640px);
+  transition: background-image 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   DARK THEME: Adjusted Logo Background & High-Contrast Readability
+   - Background logo opacity reduced to 0.22 with subtle deep tone to remove harsh whiteout glow
+   - Cards upgraded to solid dark slate (rgba(11, 17, 32, 0.96)) with clear borders
+   - Brilliant white (#ffffff) headings & name, crisp slate (#e2e8f0) body text
+   - Vibrant sky blue (#38bdf8) dates and accents
+   -------------------------------------------------------------------------- */
+
+html.dark {
+  --background: #030712;
+  --foreground: #f8fafc;
+  --muted-foreground: #e2e8f0; /* Crisp slate-200: maximum dark readability */
+  --card: #0b1120;
+  --card-foreground: #f8fafc;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --muted: #1e293b;
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+  --border: rgba(255, 255, 255, 0.14);
+  --primary: #f8fafc;
+  --primary-foreground: #020617;
+}
+
+html.dark body {
+  background-color: #030712 !important;
+  color: #f8fafc !important;
+}
+
+/* Adjusted background logo lightness: soft ambient watermark that won't wash out letters */
+html.dark .site-background {
+  background-color: #030712 !important;
+  background-image: url("assets/portfolio-background.jpg") !important;
+  opacity: 0.22 !important;
+  filter: brightness(0.9) contrast(1.1) !important;
+}
+
+/* Dark Theme Typography: High contrast & razor-sharp legibility */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark .text-foreground,
+html.dark #dialog-title {
+  color: #ffffff !important;
+  font-weight: 750 !important;
+}
+
+html.dark #intro .text-4xl,
+html.dark #intro .text-5xl {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.dark #intro .bg-clip-text {
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  background: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.dark .jsx-67dd5df6263197bb,
+html.dark .word {
+  color: #f1f5f9 !important;
+  font-weight: 650 !important;
+}
+
+html.dark p,
+html.dark .text-muted-foreground,
+html.dark .font-hanken,
+html.dark #dialog-description,
+html.dark .local-contact > p {
+  color: #e2e8f0 !important; /* Crisp slate-200 */
+  font-weight: 500 !important;
+  line-height: 1.65 !important;
+}
+
+html.dark .from-foreground {
+  --tw-gradient-from: #ffffff !important;
+}
+html.dark .to-foreground\/70 {
+  --tw-gradient-to: #e2e8f0 !important;
+}
+
+html.dark .experience-dates {
+  color: #38bdf8 !important; /* Vivid sky-400 */
+  font-weight: 750 !important;
+}
+
+/* Dark Theme Card Surfaces: Rich, solid dark backing so letters are 100% readable */
+html.dark .bg-card,
+html.dark .experience-entry,
+html.dark #project-dialog,
+html.dark article {
+  background-color: rgba(11, 17, 32, 0.96) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .bg-secondary\/80,
+html.dark .bg-secondary,
+html.dark [class*="bg-secondary"],
+html.dark #dialog-tags span {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  font-weight: 600 !important;
+}
+
+html.dark .skill-tech-chip {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 650 !important;
+}
+
+html.dark .contact-link,
+html.dark .details-trigger {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  font-weight: 650 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .contact-link:hover,
+html.dark .details-trigger:hover {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-primary {
+  background-color: #f8fafc !important;
+  color: #020617 !important;
+  font-weight: 650 !important;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark #site-header {
+  background-color: rgba(3, 7, 18, 0.94) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(16px);
+}
+
+html.dark #mobile-nav {
+  background-color: #0b1120 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 14px 20px -15px rgba(0, 0, 0, 0.6);
+}
+
+html.dark #mobile-nav a {
+  color: #f8fafc !important;
+  font-weight: 650 !important;
+}
+
+html.dark .nav-item {
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+html.dark .nav-item:hover {
+  color: #ffffff !important;
+  background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+html.dark .nav-item.active-nav-link {
+  color: #ffffff !important;
+  background-color: #1e293b !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 750 !important;
+}
+
+html.dark .nav-item.active-nav-link::after {
+  background: #38bdf8 !important; /* Electric sky accent line */
+  width: 20px !important;
+  height: 2.5px !important;
+}
+
+html.dark #site-footer {
+  color: #cbd5e1 !important;
+}
+
+html.dark #site-footer blockquote {
+  color: #e2e8f0 !important;
+  border-color: #38bdf8 !important;
+  font-weight: 500 !important;
+}
+
+html.dark #site-footer p {
+  color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   LIGHT THEME: Adjusted Canvas Lightness & Superior Color Typography
+   - Soft, comfortable #f1f5f9 canvas that avoids glaring whiteout
+   - Tasteful watermark logo opacity (0.18) so letters never compete with background
+   - Solid #ffffff cards for 100% clean, crisp reading surfaces
+   - Superior Color: Pitch obsidian (#000000 / #020617) headings and deep dark (#0f172a / #1e293b) body text
+   -------------------------------------------------------------------------- */
+
+html:not(.dark) {
+  --background: #f1f5f9; /* Slate-100: comfortable, soft, premium light tone */
+  --foreground: #020617; /* Pitch dark obsidian */
+  --muted-foreground: #1e293b; /* Deep slate-800: rich, solid, high contrast */
+  --card: #ffffff; /* Crisp pure white card surface */
+  --card-foreground: #020617;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #020617;
+  --muted: #e2e8f0;
+  --accent: #e2e8f0;
+  --accent-foreground: #020617;
+  --border: rgba(15, 23, 42, 0.14);
+  --primary: #020617;
+  --primary-foreground: #ffffff;
+}
+
+html:not(.dark) body {
+  background-color: #f1f5f9 !important;
+  color: #020617 !important;
+}
+
+/* Adjusted background lightness & watermark accent */
+html:not(.dark) .site-background {
+  background-color: #f1f5f9 !important;
+  background-image: url("assets/portfolio-background-light.png") !important;
+  opacity: 0.18 !important; /* Soft watermark level: elegant, visible, zero letter clash */
+  filter: none !important;
+}
+
+/* Toned background gradient in light mode */
+html:not(.dark) .background-gradient {
+  opacity: 0.04 !important;
+}
+
+/* SUPERIOR COLOR TYPOGRAPHY: Light Theme */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) .text-foreground,
+html:not(.dark) #dialog-title {
+  color: #000000 !important;
+  font-weight: 750 !important;
+}
+
+html:not(.dark) #intro .text-4xl,
+html:not(.dark) #intro .text-5xl {
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html:not(.dark) #intro .bg-clip-text {
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  background: none !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html:not(.dark) .jsx-67dd5df6263197bb,
+html:not(.dark) .word {
+  color: #0f172a !important;
+  font-weight: 650 !important;
+}
+
+html:not(.dark) p,
+html:not(.dark) .text-muted-foreground,
+html:not(.dark) .font-hanken,
+html:not(.dark) #dialog-description,
+html:not(.dark) .local-contact > p {
+  color: #0f172a !important; /* Rich deep slate-900: superior clarity */
+  font-weight: 500 !important;
+  line-height: 1.65 !important;
+}
+
+html:not(.dark) .from-foreground {
+  --tw-gradient-from: #000000 !important;
+}
+html:not(.dark) .to-foreground\/70 {
+  --tw-gradient-to: #0f172a !important;
+}
+
+html:not(.dark) .experience-dates {
+  color: #0369a1 !important; /* Punchy, authoritative Sky-700 */
+  font-weight: 750 !important;
+}
+
+/* SUPERIOR CARD SURFACES: Crisp white, high-contrast elevation */
+html:not(.dark) .bg-card,
+html:not(.dark) .experience-entry,
+html:not(.dark) #project-dialog,
+html:not(.dark) article {
+  background-color: #ffffff !important;
+  color: #020617 !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+html:not(.dark) .bg-secondary\/80,
+html:not(.dark) .bg-secondary,
+html:not(.dark) [class*="bg-secondary"],
+html:not(.dark) #dialog-tags span {
+  background-color: #f1f5f9 !important;
+  color: #020617 !important;
+  border: 1px solid #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+html:not(.dark) .skill-tech-chip {
+  background-color: #ffffff !important;
+  color: #020617 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+  font-weight: 650 !important;
+}
+
+html:not(.dark) .contact-link,
+html:not(.dark) .details-trigger {
+  background-color: #ffffff !important;
+  color: #020617 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-weight: 650 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+html:not(.dark) .contact-link:hover,
+html:not(.dark) .details-trigger:hover {
+  background-color: #f8fafc !important;
+  border-color: #020617 !important;
+  color: #000000 !important;
+}
+
+html:not(.dark) .bg-primary {
+  background-color: #020617 !important;
+  color: #ffffff !important;
+  font-weight: 650 !important;
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.25) !important;
+}
+
+html:not(.dark) #site-header {
+  background-color: rgba(241, 245, 249, 0.94) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+  backdrop-filter: blur(16px);
+}
+
+html:not(.dark) #mobile-nav {
+  background-color: #ffffff !important;
+  border-top: 1px solid #cbd5e1 !important;
+  box-shadow: 0 14px 20px -15px rgba(15, 23, 42, 0.2);
+}
+
+html:not(.dark) #mobile-nav a {
+  color: #020617 !important;
+  font-weight: 650 !important;
+}
+
+html:not(.dark) .nav-item {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+html:not(.dark) .nav-item:hover {
+  color: #000000 !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html:not(.dark) .nav-item.active-nav-link {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1) !important;
+  font-weight: 750 !important;
+}
+
+html:not(.dark) .nav-item.active-nav-link::after {
+  background: #0284c7 !important; /* Electric sky accent line */
+  width: 20px !important;
+  height: 2.5px !important;
+}
+
+html:not(.dark) #site-footer {
+  color: #334155 !important;
+}
+
+html:not(.dark) #site-footer blockquote {
+  color: #0f172a !important;
+  border-color: #0284c7 !important;
+  font-weight: 500 !important;
+}
+
+html:not(.dark) #site-footer p {
+  color: #000000 !important;
+}
+
+/* ==========================================================================
+   Frosted Glass Surfaces (Dark Mode blur and general layer polish)
+   ========================================================================== */
+
+.bg-card,
+.experience-entry,
+#intro,
+#about,
+.local-contact,
+#project-dialog {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ==========================================================================
+   Page Transition System
+   ========================================================================== */
+
+.page-view {
+  display: none;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.page-view.active-view {
+  display: block;
+  animation: pageEntrance 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.988);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Active Nav Links styling */
+.nav-item {
+  position: relative;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active-nav-link {
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.nav-item.active-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 9999px;
+}
+
+#mobile-nav a.active-nav-link {
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Header & Banner Framing
+   ========================================================================== */
+
+#site-header {
+  isolation: isolate;
+}
+
+#site-header a:focus-visible,
+#site-header button:focus-visible,
+.contact-link:focus-visible,
+.details-trigger:focus-visible,
+#dialog-close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+#mobile-nav {
+  padding: .35rem 1.25rem 1rem;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 14px 20px -24px rgba(0,0,0,.5);
+}
+
+#mobile-nav a {
+  display: block;
+  padding: .72rem .8rem;
+  border-radius: .7rem;
+  font-size: .95rem;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+@media (min-width: 640px) {
+  #mobile-nav {
+    display: none !important;
+  }
+}
+
+#intro > div > .relative {
+  margin-top: -3rem !important;
+}
+
+html.dark #intro img.adi-hero-light {
+  display: none !important;
+}
+
+html:not(.dark) #intro img.adi-hero-dark {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Experience Entries & Details Trigger
+   ========================================================================== */
+
+.experience-entry .experience-heading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  column-gap: 1.5rem;
+}
+
+.experience-entry .experience-heading > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.experience-entry .experience-dates {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+  padding-top: .3rem;
+  font-size: 0.8rem;
+}
+
+.details-trigger {
+  border: 1px solid var(--border);
+  border-radius: .5rem;
+  font-size: .875rem;
+  font-weight: 600;
+  padding: .5rem .85rem;
+  transition: filter .2s, transform .2s;
+  cursor: pointer;
+}
+
+.details-trigger:hover {
+  filter: brightness(.94);
+  transform: translateY(-1px);
+}
+
+.experience-entry {
+  cursor: default;
+}
+
+.experience-entry:hover {
+  transform: none;
+}
+
+.experience-entry + .experience-entry {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   Skills Technology Chips
+   ========================================================================== */
+
+#skills .skill-tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .5rem .75rem;
+  white-space: nowrap;
+}
+
+#skills .skill-icon {
+  display: inline-block;
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  object-fit: contain;
+}
+
+#skills .skill-tech-chip span {
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   Contact & Dialog Modal
+   ========================================================================== */
+
+.local-contact {
+  padding-top: 1.5rem;
+  padding-bottom: 2.7rem;
+}
+
+.local-contact h2 {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -.045em;
+}
+
+.local-contact > p {
+  margin: .8rem 0 1rem;
+  max-width: 37rem;
+  line-height: 1.65;
+}
+
+.contact-inline {
+  overflow-wrap: anywhere;
+}
+
+#project-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(94vw, 720px);
+  max-height: min(90vh, 820px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 80px rgba(0,0,0,.25);
+}
+
+#project-dialog::backdrop {
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.project-dialog-content {
+  padding: 1.8rem;
+}
+
+#dialog-close {
+  float: right;
+  padding: .3rem .5rem;
+  border-radius: .4rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+#dialog-close:hover {
+  background: var(--accent);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+#dialog-media {
+  margin-bottom: 1.25rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#dialog-media:empty {
+  display: none;
+}
+
+#dialog-media img {
+  width: 100%;
+  height: auto;
+  max-height: 52vh;
+  object-fit: contain;
+  display: block;
+}
+
+#dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: .5rem 0 1rem;
+}
+
+#dialog-description {
+  line-height: 1.65;
+  margin-bottom: 1.4rem;
+}
+
+#dialog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+#dialog-tags span {
+  display: inline-flex;
+  padding: .32rem .6rem;
+  border-radius: .4rem;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+#dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+#dialog-actions:empty {
+  display: none;
+}
+
+/* ==========================================================================
+   Project Cards & Smartpoint Glasses Styles
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2 !important;
+  }
+}
+
+.powersupply-thumb,
+.smartpoint-app-thumb {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.powersupply-thumb:hover,
+.smartpoint-app-thumb:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.project-callout,
+.smartpoint-callout {
+  border-radius: 0.75rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0.75rem 0;
+}
+
+html.dark .project-callout,
+html.dark .smartpoint-callout {
+  background-color: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  color: #e2e8f0 !important;
+}
+
+html:not(.dark) .project-callout,
+html:not(.dark) .smartpoint-callout {
+  background-color: #f0f9ff !important;
+  border: 1px solid #bae6fd !important;
+  color: #0c4a6e !important;
+}
+
+/* ==========================================================================
+   Certificates & Transcript Card Styles
+   ========================================================================== */
+
+.cert-card-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.cert-transcript-box {
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.825rem;
+  line-height: 1.6;
+}
+
+html.dark .cert-transcript-box {
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #e2e8f0 !important;
+}
+
+html:not(.dark) .cert-transcript-box {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .cert-transcript-box blockquote {
+  color: #334155 !important;
+}
+
+/* ==========================================================================
+   Bunny Radio Music Player
+   ========================================================================== */
+
+.bunny-radio,
+.bunny-music-restore {
+  --bunny-detail: #92afd6;
+  --bunny-glow: rgba(121, 158, 211, .17);
+  position: fixed;
+  z-index: 45;
+  right: 16px;
+  bottom: 16px;
+  color: var(--foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0,0,0,.22);
+  font-family: inherit;
+}
+
+html:not(.dark) .bunny-radio,
+html:not(.dark) .bunny-music-restore {
+  --bunny-detail: #0284c7;
+  --bunny-glow: rgba(2, 132, 199, .15);
+  box-shadow: 0 12px 38px rgba(15, 23, 42, 0.16);
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.16) !important;
+  color: #020617 !important;
+}
+
+html:not(.dark) .bunny-radio .bunny-radio-song {
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html:not(.dark) .bunny-radio .bunny-radio-artist {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+html:not(.dark) .bunny-radio .bunny-radio-play {
+  background: #020617 !important;
+  color: #ffffff !important;
+  border-color: #020617 !important;
+}
+
+html:not(.dark) .bunny-radio .bunny-radio-play:hover {
+  background: #1e293b !important;
+}
+
+.bunny-radio {
+  width: min(328px, calc(100vw - 24px));
+  padding: 12px;
+  border-radius: 17px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.bunny-radio-top {
+  display: grid;
+  grid-template-columns: 49px minmax(0,1fr) 26px;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.bunny-radio-cover {
+  position: relative;
+  width: 49px;
+  height: 49px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #253c56 url("assets/images/5f365b46bbe27ebb9c77b68611bf5dc7.jpg") center/cover;
+}
+
+html:not(.dark) .bunny-radio-cover {
+  background-color: #c0dbc5;
+  background-image: url("assets/images/b67979daf081bb08eb5249c0f6e1d1c5.jpg");
+}
+
+.bunny-radio-cover-note {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  background: rgba(10,20,26,.72);
+  color: #fff;
+}
+
+.bunny-radio-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.bunny-radio-heading {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .115em;
+  color: var(--bunny-detail);
+  white-space: nowrap;
+}
+
+.bunny-radio-heading svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.bunny-radio-song {
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -.015em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bunny-radio-artist {
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bunny-radio-artist span[aria-hidden] {
+  padding: 0 2px;
+}
+
+.bunny-radio-hide,
+.bunny-radio-mute {
+  background: transparent;
+  color: var(--muted-foreground);
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 3px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.bunny-radio-hide {
+  width: 26px;
+  height: 26px;
+  align-self: start;
+}
+
+.bunny-radio-hide svg,
+.bunny-radio-mute svg {
+  width: 16px;
+  height: 16px;
+}
+
+.bunny-radio-hide:hover,
+.bunny-radio-mute:hover {
+  background: var(--secondary);
+  color: var(--foreground);
+}
+
+.bunny-radio-bottom {
+  margin-top: 11px;
+  display: grid;
+  grid-template-columns: 34px minmax(0,1fr) 25px 55px;
+  align-items: center;
+  gap: 9px;
+}
+
+.bunny-radio-play {
+  display: grid;
+  place-items: center;
+  height: 34px;
+  width: 34px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--secondary);
+  color: var(--foreground);
+  transition: transform .15s ease, background .15s ease;
+  cursor: pointer;
+}
+
+.bunny-radio-play:hover {
+  transform: scale(1.05);
+  background: var(--bunny-glow);
+}
+
+.bunny-radio-play svg {
+  width: 18px;
+  height: 18px;
+}
+
+.bunny-radio .bunny-icon-pause {
+  display: none;
+}
+
+.bunny-radio[data-playing="true"] .bunny-icon-play {
+  display: none;
+}
+
+.bunny-radio[data-playing="true"] .bunny-icon-pause {
+  display: block;
+}
+
+.bunny-radio-progress {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.bunny-radio input[type="range"] {
+  display: block;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  accent-color: var(--bunny-detail);
+  background: transparent;
+}
+
+.bunny-radio input[type="range"]:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.bunny-radio-time {
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 9px;
+  color: var(--muted-foreground);
+}
+
+.bunny-radio-mute {
+  width: 25px;
+  height: 30px;
+}
+
+.bunny-volume-slash {
+  display: none;
+}
+
+.bunny-radio[data-muted="true"] .bunny-volume-slash {
+  display: block;
+}
+
+.bunny-radio[data-muted="true"] .bunny-volume-wave {
+  display: none;
+}
+
+.bunny-radio-volume {
+  width: 55px !important;
+}
+
+.bunny-music-restore {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bunny-music-restore svg {
+  width: 23px;
+  height: 23px;
+  color: var(--bunny-detail);
+}
+
+.bunny-mini-state {
+  color: var(--bunny-detail);
+  font-size: 13px;
+}
+
+.bunny-radio :is(button,input):focus-visible,
+.bunny-music-restore:focus-visible {
+  outline: 2px solid var(--bunny-detail);
+  outline-offset: 3px;
+}
+
+.bunny-music-restore:hover {
+  background: var(--secondary);
+}
+
+/* ==========================================================================
+   Responsive & Accessibility
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .experience-entry .experience-heading {
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .experience-entry .experience-dates {
+    align-self: flex-start;
+    margin-left: 0;
+    padding-top: 0;
+  }
+  #site-header {
+    width: 100%;
+  }
+  .local-contact {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .project-dialog-content {
+    padding: 1.1rem;
+  }
+  #intro .h-52 {
+    height: 13rem;
+  }
+  .bunny-radio,
+  .bunny-music-restore {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
